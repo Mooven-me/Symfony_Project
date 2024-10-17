@@ -1,19 +1,35 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+{% extends './templates/navBar.html.twig' %}
+{% block navBar %}
+    <form class="d-flex me-2">
+        <input class="form-control me-2" type="search" placeholder="Rechercher un Article" aria-label="Search">
+        <button class="btn btn-orange" type="submit">Chercher</button>
+    </form>
+{% endblock %}
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
-</html>
+{% block content %}
+    <div class="container mt-5">
+        <div class="row">
+            <main class="col-md-8">
+                {% for key, item in items %}
+                    <h2>{{ item.title }}</h2>
+                    <p>{{ item.content }}</p>
+                    <img src="{{ item.img }}" alt="Image for {{ item.title }}">
+                    <p>{{ item.trucs }}</p>
+                {% endfor %}
+            </main>
+            <aside class="col-md-4">
+                <div class="sidebar">
+                    <h3>Filtres</h3>
+                    <ul class="list-group">
+                        {% for ingredient in ingredients %}
+                            <li class="list-group-item">
+                                <input type="checkbox"> {{ ingredient }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <button class="btn btn-orange w-100 mt-3">Filter</button>
+                </div>
+            </aside>
+        </div>
+    </div>
+{% endblock %}

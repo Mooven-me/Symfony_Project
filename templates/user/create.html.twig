@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block navBar %}
+{% endblock %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{{ asset('css/register.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="register-container">
+    <div class="register-form">
+        <form method="post" action="{{ path('app_user_create') }}">
+            <h1 class="h3 mb-3 font-weight-normal">Créer un compte</h1>
+            {% if error  %}
+                <h1 class="red-text">{{error.title}}</h1><br>
+                <div class="red-text">{{error.description}}</div>
+            {% endif %}
+            <div class="mb-3">
+                <label for="inputEmail" class="form-label">Email</label>
+                <input type="email" name="email" id="inputEmail" class="form-control" required autofocus>
+            </div>
+
+            <div class="mb-3">
+                <label for="inputUsername" class="form-label">Nom d'utilisateur</label>
+                <input type="text" name="username" id="inputUsername" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="inputPassword" class="form-label">Mot de passe</label>
+                <input type="password" name="password" id="inputPassword" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="inputConfirmPassword" class="form-label">Confirmation du mot de passe</label>
+                <input type="password" name="confirm_password" id="inputConfirmPassword" class="form-control" required>
+            </div>
+
+            
+            <button class="btn btn-lg btn-orange w-100" type="submit">
+                Créer le compte
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

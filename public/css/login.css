@@ -1,0 +1,32 @@
+body {
+    background-color: #FFF5E6; /* Light orange background */
+}
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+.login-form {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+.btn-orange {
+    background-color: #FFA500;
+    border-color: #FFA500;
+    color: white;
+}
+.btn-orange:hover {
+    background-color: #FF8C00;
+    border-color: #FF8C00;
+    color: white;
+}
+
+.form-control:focus {
+    border-color: #FFA500;
+    box-shadow: 0 0 0 0.2rem rgba(255, 165, 0, 0.25);
+}
