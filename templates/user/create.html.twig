@@ -12,7 +12,7 @@
     <div class="register-form">
         <form method="post" action="{{ path('app_user_create') }}">
             <h1 class="h3 mb-3 font-weight-normal">Créer un compte</h1>
-            {% if error  %}
+            {% if error is defined%}
                 <h1 class="red-text">{{error.title}}</h1><br>
                 <div class="red-text">{{error.description}}</div>
             {% endif %}

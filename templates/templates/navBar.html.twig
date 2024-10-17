@@ -6,7 +6,6 @@
     {% block stylesheet %}
     {% endblock %}
     <link rel="stylesheet" href="{{ asset('node_modules/bootstrap/dist/css/bootstrap.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <title>Chèvre Miel Blog</title>
 </head>
@@ -30,29 +29,34 @@
                 </ul>
                 {% block navBar %}
                 {% endblock %}
-                <!-- future change : check if the user is connected to not display the create account and login button -->
-                {% if false %}
-                {% else %}
+
+                {% if app.session.get('connecte') %}
                 <div class="dropdown">
+                    <button class="btn btn-orange-reverse dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{app.session.get('surnom')}}
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                        <!-- future change : check if the user is connected to not display the create account and login button -->
+                        
+                        <li><a class="dropdown-item" href="/blog">Écrire un blog</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/disconnect">Se déconnecter</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/delete_account">Supprimer le compte</a></li>
+                        
+                        
+                    </ul>
+                </div>
+                {% else %}
+               <div class="dropdown">
                     <button class="btn btn-orange-reverse dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                         Compte
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                        <!-- future change : check if the user is connected to not display the create account and login button -->
-                        {% if false %}
-                        <li><a class="dropdown-item" href="#">Écrire un blog</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">se déconnecter</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">supprimer le compte</a></li>
-                        {% else %}
                         <li><a class="dropdown-item" href="/user_connect">Se connecter</a></li>
                         <li><a class="dropdown-item" href="/user_create">S'inscrire</a></li>
-                        
-                        {% endif %}
                     </ul>
                 </div>
-               
                 {% endif %}
             </div>
         </div>

@@ -10,23 +10,17 @@
 {% block content %}
 <div class="login-container">
     <div class="login-form">
-        <form method="post">
-            {% if app.user %}
-                <div class="mb-3">
-                    You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
-                </div>
+        <form method="post " action="{{ path('app_user_cconnect_valid') }}">
+            {% if error is defined %}
+                <h1 class="red-text">{{error.title}}</h1><br>
+                <div class="red-text">{{error.description}}</div>
             {% endif %}
-
             <h1 class="h3 mb-3 font-weight-normal">Connectez vous</h1>
-            <label for="inputUsername" class="form-label">Email</label>
-            <input type="email" name="username" id="inputUsername" class="form-control mb-3" required autofocus>
+            <label for="inputEmail" class="form-label">Email</label>
+            <input type="email" name="email" id="inputEmail" class="form-control mb-3" required autofocus>
 
             <label for="inputPassword" class="form-label">Mot de passe</label>
             <input type="password" name="password" id="inputPassword" class="form-control mb-3" required>
-
-            <input type="hidden" name="_csrf_token"
-                   value="{{ csrf_token('authenticate') }}"
-            >
 
             <button class="btn btn-lg btn-orange w-100" type="submit">
                 Se connecter
