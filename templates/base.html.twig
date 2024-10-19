@@ -1,33 +1,57 @@
+<!--permet d'ajouter la nav barr ( la barre en haut de la page web ) -->
 {% extends './templates/navBar.html.twig' %}
+
+<!--permet d'ajouter l'option de recherche dans la navBar -->
 {% block navBar %}
-    <form class="d-flex me-2">
-        <input class="form-control me-2" type="search" placeholder="Rechercher un Article" aria-label="Search">
+    <form class="d-flex me-2" action="{{ path('search_blog', {'search': ' '}) }}" method="GET">
+        <input class="form-control me-2" type="search" name="search" placeholder="Rechercher un Article" aria-label="Search" value="{{ search_term|default('') }}">
         <button class="btn btn-orange" type="submit">Chercher</button>
     </form>
 {% endblock %}
 
+<!--permet  d'afficher les blogs-->
 {% block content %}
     <div class="container mt-5">
         <div class="row">
             <main class="col-md-8">
+                <!-- boucle permettant d'afficher les blogs -->
                 {% for key, item in items %}
+                <div class="padding-t-b">
                     <h2>{{ item.title }}</h2>
-                    <p>{{ item.content }}</p>
-                    <img src="{{ item.img }}" alt="Image for {{ item.title }}">
-                    <p>{{ item.trucs }}</p>
+                    <hr/>
+                    <!-- affiche l'image -->
+                    <img src="{% if path_to_public is defined %}{{ path_to_public }}{% endif %}uploads/blog_images/{{ item.FileName }}" alt="Image for {{ item.title }}" style="max-width:600px;width:100%">
+                    <h3><p>{{ item.description }}</p></h3>
+                    <hr/>
+
+                    <!-- affiche les ingrédients -->
+                    <h4>Ingredients :
+                    {% for ingredient in item.Ingredients %}
+                        {{ ingredient }}
+                    {% endfor %}
+                    </h4>
+                    <!-- permet de faire un hyper liens vers le liens des blogs d'un utilisateurs -->
+                    <br>De : <a href="/search/user/{{ item.utilisateur.surnom }}">{{ item.utilisateur.surnom }}</a>
+                </div>
                 {% endfor %}
             </main>
             <aside class="col-md-4">
                 <div class="sidebar">
+                    <form action="{{ path('blogs_filtre') }}" method="POST">
+                    <!-- filtres -->
                     <h3>Filtres</h3>
+                    (choisis les ingrédients des pizzas dans les blogs que tu veux)
                     <ul class="list-group">
-                        {% for ingredient in ingredients %}
-                            <li class="list-group-item">
-                                <input type="checkbox"> {{ ingredient }}
+                    <!-- permet de lister tout les ingrédients passé par le controlleur -->
+                        {% for ingredient, number in ingredients %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <input type="checkbox" name="selected_ingredients[]" value="{{ ingredient }}"> {{ ingredient }}
+                                <span class="badge bg-secondary">{{ number }}</span>
                             </li>
                         {% endfor %}
                     </ul>
-                    <button class="btn btn-orange w-100 mt-3">Filter</button>
+                    <button type="submit" class="btn btn-orange w-100 mt-3">Filter</button>
+                    </form>
                 </div>
             </aside>
         </div>

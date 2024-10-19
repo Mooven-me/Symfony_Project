@@ -32,3 +32,17 @@ body{
     border-color: #FF8C00;
     color: white;
 }
+
+.padding-t-b {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 5px;
+    margin: 50px
+}
+
+.list-group-item {
+    display: flex; /* Ensure it's a flex container */
+    justify-content: space-between; /* Space out the checkbox and the count */
+    align-items: center; /* Center items vertically */
+}
+

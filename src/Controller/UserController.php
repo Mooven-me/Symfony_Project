@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Blogs;
 use App\Entity\Utilisateur;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -118,6 +119,19 @@ class UserController extends AbstractController{
     #[Route('/delete_account', name: 'delete_account')]
     public function delete(Request $request, ManagerRegistry $doctrine): Response
     {
+
+        $session = $request->getSession();
+        $email = $session->get('email');
+
+        $criteria = ['utilisateur' => $doctrine->getRepository(persistentObject: Utilisateur::class)->findOneBy(['email' => $email])];
+        
+        $items = $doctrine->getRepository(persistentObject: Blogs::class)->findBy($criteria,['id' => 'desc']);
+
+        foreach($items as $blogs){
+            unlink("uploads/blog_images/". $blogs->getFileName());
+        }
+        
+
         //on récupère la session courante
         $session = $request->getSession();
 
