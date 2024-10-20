@@ -34,6 +34,7 @@ body{
 }
 
 .padding-t-b {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     background-color: #f8f9fa;
     padding: 20px;
     border-radius: 5px;
@@ -41,8 +42,37 @@ body{
 }
 
 .list-group-item {
-    display: flex; /* Ensure it's a flex container */
-    justify-content: space-between; /* Space out the checkbox and the count */
-    align-items: center; /* Center items vertically */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
+
+.about-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+.about-form {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+}
+
+.img-articles{
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); 
+    max-width: 600px;
+    max-height: 500px;
+    width: auto;
+    height: auto;
+}
+
+.height-fix{
+    height: 80vh;
+}

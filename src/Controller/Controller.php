@@ -60,41 +60,31 @@ class Controller extends AbstractController
     public function filtre(Request $request, ManagerRegistry $doctrine, array $criteria = []): array
     {
         $selectedIngredients = $request->get('selected_ingredients', []);
-
-        
+       
         /** @var EntityRepository $entityManager */
         $entityManager = $doctrine->getManager();
         $queryBuilder = $entityManager->createQueryBuilder();
 
-        // On prepare la 
-        $queryBuilder->select('b')
-            ->from(Blogs::class, 'b');
+        // On prepare la query
+        $queryBuilder->select('b')->from(Blogs::class, 'b');
 
-        // Add additional criteria to the query
         foreach ($criteria as $field => $value) {
-            // Ensure that the field is valid and prevent SQL injection
             if (property_exists(Blogs::class, $field)) {
                 $queryBuilder->andWhere("b.$field = :$field")
                     ->setParameter($field, $value);
             }
         }
-
-        // Add conditions for selected ingredients
+        // on ajoute une condition 'AND' pour chaques ingrédients checké
         if (!empty($selectedIngredients)) {
-            $orX = $queryBuilder->expr()->orX();
-            foreach ($selectedIngredients as $ingredient) {
-                $orX->add(
-                    $queryBuilder->expr()->like('b.Ingredients', $queryBuilder->expr()->literal('%"' . $ingredient . '"%'))
-                );
+            foreach ($selectedIngredients as $index => $ingredient) {
+                $queryBuilder->andWhere(
+                    $queryBuilder->expr()->like('b.Ingredients', ':ingredient' . $index)
+                )
+                ->setParameter('ingredient' . $index, '%"' . $ingredient . '"%');
             }
-
-            // Add the OR condition to the query
-            $queryBuilder->andWhere($orX);
         }
-
+        // on trie par rapport aux ingrédients ayant le plus d'articles
         $queryBuilder->orderBy('b.id', 'DESC');
-
-        // Get the results
         return $queryBuilder->getQuery()->getResult();
     }
 
